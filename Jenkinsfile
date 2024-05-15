@@ -14,6 +14,8 @@ pipeline {
     parameters {
         string(name: 'version', defaultValue: '', description: 'What is the version to download artifact ?')
         string(name: 'environment', defaultValue: '', description: 'What is the environment for infra ?')
+        booleanParam(name: 'Create', defaultValue: false, description: 'Create the infra ?')
+        booleanParam(name: 'Destroy', defaultValue: false, description: 'Destroy the infra ?')
     }
 
     stages {
@@ -34,7 +36,7 @@ pipeline {
                 """
             }
         }
-        stage('plan') {
+        stage('Plan') {
             steps {
                 sh """
                 cd terraform
@@ -42,7 +44,12 @@ pipeline {
                 """
             }
         }
-        stage('apply') {
+        stage('Apply') {
+            // when {
+            //     expression {
+            //         params.Create
+            //     }
+            // }
             steps {
                 sh """
                 cd terraform
@@ -51,7 +58,12 @@ pipeline {
             }
         }
 
-        stage('destroy') {
+        stage('Destroy') {
+            when {
+                expression {
+                    params.Destroy
+                }
+            }
             steps {
                 sh """
                 cd terraform
