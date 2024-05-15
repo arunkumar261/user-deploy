@@ -1,4 +1,4 @@
-    bucket = "roboshop-state-prod-env"     
+    bucket = "roboshop-state-prod-environment"     
     key    = "user"
     region = "us-east-1"
-    dynamodb_table = "roboshop-locking-prod-env"
+    dynamodb_table = "roboshop-locking-prod"
